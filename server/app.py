@@ -18,7 +18,7 @@ db.init_app(app)
 def index():
     return '<h1>Bakery GET API</h1>'
 
-@app.route('/bakeries')
+@app.route('/bakeries', methods='GET')
 def bakeries():
     bakeries_list =[]
     for bakery in Bakery.query.all():
@@ -29,7 +29,7 @@ def bakeries():
         bakeries.append(bakery_dict)
     return jsonify(bakeries_list)
 
-@app.route('/bakeries/<int:id>')
+@app.route('/bakeries/<int:id>', methods=['GET'])
 def bakery_by_id(id):
     bakery = Bakery.query.get(id)
     if bakery is None:
@@ -45,7 +45,7 @@ def bakery_by_id(id):
 
     return jsonify(bakery_data)
 
-@app.route('/baked_goods/by_price')
+@app.route('/baked_goods/by_price', methods='GET')
 def baked_goods_by_price():
     baked_goods = BakedGood.query.order_by(BakedGood.price.desc()).all()
 
@@ -60,7 +60,7 @@ def baked_goods_by_price():
 
     return jsonify(baked_goods_data)
 
-@app.route('/baked_goods/most_expensive')
+@app.route('/baked_goods/most_expensive', methods ='GET')
 def most_expensive_baked_good():
      most_expensive_baked_good = BakedGood.query.order_by(BakedGood.price.desc()).first()
      if most_expensive_baked_good is None:
